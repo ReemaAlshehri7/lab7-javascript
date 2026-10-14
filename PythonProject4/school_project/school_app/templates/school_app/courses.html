@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head><title>Courses</title></head>
+<body>
+    <h1>Course List</h1>
+    <ul>
+        {% for course in courses %}
+            <li>{{ course.name }} ({{ course.code }})</li>
+        {% empty %}
+            <li>No courses found.</li>
+        {% endfor %}
+    </ul>
+
+    <hr>
+    <h2>Add New Course</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save Course</button>
+    </form>
+
+    <br>
+    <a href="{% url 'students' %}">Go to Students (AddStudent)</a>
+</body>
+</html>

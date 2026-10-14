@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head><title>Student Details</title></head>
+<body>
+    <h1>{{ student.first_name }} {{ student.last_name }}</h1>
+    <p>Email: {{ student.email }}</p>
+    <p>Enrollment Date: {{ student.enrollment_date }}</p>
+
+    <h3>Enrolled Courses:</h3>
+    <ul>
+        {% for course in student.courses.all %}
+            <li>{{ course.name }}</li>
+        {% empty %}
+            <li>Not enrolled in any courses.</li>
+        {% endfor %}
+    </ul>
+
+    <hr>
+    <!-- Form with a select element containing only unregistered courses[cite: 4] -->
+    <h3>Enroll in a New Course</h3>
+    <form method="POST">
+        {% csrf_token %}
+        <select name="course_id" required>
+            <option value="" disabled selected>Select a course</option>
+            {% for course in unregistered_courses %}
+                <option value="{{ course.id }}">{{ course.name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Enroll</button>
+    </form>
+
+    <br><br>
+    <a href="{% url 'students' %}">AddStudent</a> |
+    <a href="{% url 'courses' %}">AddCourse</a>
+</body>
+</html>
